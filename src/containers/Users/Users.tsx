@@ -20,11 +20,17 @@ const Users: React.FC = () => {
     dispatch(getUsers());
   }, [dispatch]);
 
+  const loading = usersRequestStatus === Statuses.PENDING;
+
+  const error = usersRequestStatus === Statuses.FAILURE;
+
   return (
     <UsersWrapper>
-      {usersRequestStatus === Statuses.PENDING && <CircularProgress />}
-      {usersRequestStatus === Statuses.FAILURE && "some error..."}
-      {users &&
+      {loading && <CircularProgress />}
+      {error && "some error..."}
+      {!loading &&
+        !error &&
+        users &&
         users.map((user) => (
           <User onClick={handleClick} key={user.id} {...user} />
         ))}

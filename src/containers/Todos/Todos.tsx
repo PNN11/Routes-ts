@@ -19,11 +19,17 @@ const Todos: React.FC = () => {
     dispatch(getTodos());
   }, [dispatch]);
 
+  const loading = todosRequestStatus === Statuses.PENDING;
+
+  const error = todosRequestStatus === Statuses.FAILURE;
+
   return (
     <Container>
-      {todosRequestStatus === Statuses.PENDING && <CircularProgress />}
-      {todosRequestStatus === Statuses.FAILURE && "some error..."}
-      {todos &&
+      {loading && <CircularProgress />}
+      {error && "some error..."}
+      {!loading &&
+        !error &&
+        todos &&
         todos.map((todo) => (
           <Todo key={todo.id} onClick={handleClick} {...todo} />
         ))}

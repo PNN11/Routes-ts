@@ -31,11 +31,16 @@ const Posts: React.FC = () => {
     dispatch(getPosts());
   }, [dispatch]);
 
+  const loading = postsRequestStatus === Statuses.PENDING;
+  const error = postsRequestStatus === Statuses.FAILURE;
+
   return (
     <PostsWrapper>
-      {postsRequestStatus === Statuses.PENDING && <CircularProgress />}
-      {postsRequestStatus === Statuses.FAILURE && "some error..."}
-      {posts &&
+      {loading && <CircularProgress />}
+      {error && "some error..."}
+      {!loading &&
+        !error &&
+        posts &&
         posts?.map((post) => (
           <Post key={post.id} {...post} onClick={handleClick} />
         ))}

@@ -45,14 +45,19 @@ const PostDetail: React.FC = () => {
     }
   }, [post?.userId, dispatch]);
 
+  const loading = [postRequestStatus, postCommentsRequestStatus].includes(
+    Statuses.PENDING
+  );
+
+  const error = [postRequestStatus, postCommentsRequestStatus].includes(
+    Statuses.FAILURE
+  );
+
   return (
     <PostDetailWrapper>
-      {postRequestStatus === Statuses.PENDING &&
-        postCommentsRequestStatus === Statuses.PENDING && <CircularProgress />}
-      {postRequestStatus === Statuses.FAILURE &&
-        postCommentsRequestStatus === Statuses.FAILURE &&
-        "some error..."}
-      {post && postComments && (
+      {loading && <CircularProgress />}
+      {error && "some error..."}
+      {!loading && !error && post && postComments && (
         <>
           <Link to="/posts">Back</Link>
           <h1>{post.title}</h1>

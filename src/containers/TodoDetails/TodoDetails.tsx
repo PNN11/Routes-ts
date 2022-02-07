@@ -28,11 +28,15 @@ const TodoDetails: React.FC = () => {
     }
   }, [todo?.userId, dispatch]);
 
+  const loading = todoRequestStatus === Statuses.PENDING;
+
+  const error = todoRequestStatus === Statuses.FAILURE;
+
   return (
     <TodoDetailWrapper>
-      {todoRequestStatus === Statuses.PENDING && <CircularProgress />}
-      {todoRequestStatus === Statuses.FAILURE && "some error..."}
-      {todo && (
+      {loading && <CircularProgress />}
+      {error && "some error..."}
+      {!loading && !error && todo && (
         <>
           <Link to="/todos">Back</Link>
           {userRequestStatus === Statuses.PENDING && <CircularProgress />}

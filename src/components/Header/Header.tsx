@@ -45,6 +45,9 @@ const Header: React.FC<HeaderProps> = () => {
         <NavItem active={location.pathname.includes("users")}>
           <Link to="users">Users</Link>
         </NavItem>
+        <NavItem active={location.pathname.includes("products")}>
+          <Link to="products">Products</Link>
+        </NavItem>
       </ul>
     </Navigation>
   );

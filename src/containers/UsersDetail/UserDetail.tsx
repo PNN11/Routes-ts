@@ -19,11 +19,15 @@ const UserDetail: React.FC = () => {
     }
   }, [dispatch, params.id]);
 
+  const loading = userRequestStatus === Statuses.PENDING;
+
+  const error = userRequestStatus === Statuses.FAILURE;
+
   return (
     <UserDetailWrapeer>
-      {userRequestStatus === Statuses.PENDING && <CircularProgress />}
-      {userRequestStatus === Statuses.FAILURE && "some error..."}
-      {user && (
+      {loading && <CircularProgress />}
+      {error && "some error..."}
+      {!loading && !error && user && (
         <>
           <Link to="/users">Back</Link>
           <h4>{user.name}</h4>
